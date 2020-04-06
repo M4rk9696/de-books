@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"log"
+	"os"
 
 	connector "github.com/m4rk9696/de-books/api"
 	s "github.com/m4rk9696/de-books/api/sql"
@@ -22,6 +23,10 @@ func main() {
 	s.Migrate(db)
 	s.FetchAllTags(db)
 
+	// TODO: Remove this with a proper fix
+	if os.Getenv("mode") != "dev" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
