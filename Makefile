@@ -1,13 +1,8 @@
-.PHONY: build
+.PHONY: build start
 
 build:
 	go build
+	chmod +x de-books
 
-exec:
-	$(FENNEL) main.fnl
-
-server:
-	$(FENNEL) server.fnl
-
-client:
-	$(FENNEL) client.fnl
+start:
+	./de-books
