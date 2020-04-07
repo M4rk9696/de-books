@@ -1,3 +1,6 @@
+package sql
+
+const Schema = `
 CREATE TABLE IF NOT EXISTS DE_TAGS
   (id INTEGER PRIMARY KEY AUTOINCREMENT,
   uuid TEXT,
@@ -16,3 +19,5 @@ CREATE TABLE IF NOT EXISTS DE_BOOKS
   url TEXT,
   desc TEXT,
   added_at INTEGER);
+
+`

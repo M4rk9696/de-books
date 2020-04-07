@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"os/user"
+	"path"
 
 	connector "github.com/m4rk9696/de-books/api"
 	s "github.com/m4rk9696/de-books/api/sql"
@@ -14,9 +16,15 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("sqlite3", "./dedb.db")
+	usr, err := user.Current()
 	if err != nil {
-		log.Println("Error opening DB", err)
+		log.Fatal(err)
+	}
+	dbPath := path.Join(usr.HomeDir, ".de-books")
+	os.MkdirAll(dbPath, os.ModePerm)
+	db, err := sql.Open("sqlite3", path.Join(dbPath, "dedb.db"))
+	if err != nil {
+		log.Fatal("Error opening DB", err)
 	}
 	defer db.Close()
 

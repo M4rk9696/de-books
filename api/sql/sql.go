@@ -3,7 +3,6 @@ package sql
 import (
 	"database/sql"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"strings"
 	"time"
@@ -12,13 +11,7 @@ import (
 )
 
 func Migrate(db *sql.DB) error {
-	data, err := ioutil.ReadFile("./schema.sql")
-	if err != nil {
-		fmt.Println("File reading error", err)
-		return err
-	}
-
-	_, err = db.Exec(string(data))
+	_, err := db.Exec(Schema)
 	if err != nil {
 		fmt.Println("File reading error", err)
 		return err
