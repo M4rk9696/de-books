@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 	"os/user"
@@ -20,9 +21,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	dbPath := path.Join(usr.HomeDir, ".de-books")
-	os.MkdirAll(dbPath, os.ModePerm)
-	db, err := sql.Open("sqlite3", path.Join(dbPath, "dedb.db"))
+	writePath := path.Join(usr.HomeDir, ".de-books")
+	os.MkdirAll(writePath, os.ModePerm)
+	fmt.Println("Writing to DB at ", writePath)
+	db, err := sql.Open("sqlite3", path.Join(writePath, "dedb.db"))
 	if err != nil {
 		log.Fatal("Error opening DB", err)
 	}
@@ -39,6 +41,12 @@ func main() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(connector.DBConnector(db))
+	router.Use(func() gin.HandlerFunc {
+		return func(c *gin.Context) {
+			c.Set("writePath", writePath)
+			c.Next()
+		}
+	})
 
 	v1 := router.Group("/v1")
 	{
