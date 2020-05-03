@@ -14,6 +14,9 @@ func FetchBookmarks(c *gin.Context) {
 	db, ok := c.Get("connection")
 	// Create a method to create new connection
 	if !ok {
+		c.JSON(402, gin.H{
+			"error": "Internal Server Error",
+		})
 		log.Fatal("Connection to db not present")
 	}
 
@@ -40,6 +43,9 @@ func AddBookmark(c *gin.Context) {
 	db, ok := c.Get("connection")
 	// Create a method to create new connection
 	if !ok {
+		c.JSON(402, gin.H{
+			"error": "Internal Server Error",
+		})
 		log.Fatal("Connection to db not present")
 	}
 
