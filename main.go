@@ -52,6 +52,7 @@ func main() {
 	{
 		v1.GET("/bookmarks", apiV1.FetchBookmarks)
 		v1.POST("/add", apiV1.AddBookmark)
+		v1.StaticFile("/readable", path.Join(writePath, "dbbooks.txt"))
 	}
 
 	router.Run(":8080")
