@@ -47,6 +47,7 @@ func main() {
 			c.Next()
 		}
 	})
+	router.Static("/public", "./public")
 
 	v1 := router.Group("/v1")
 	{
