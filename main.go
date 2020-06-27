@@ -47,7 +47,7 @@ func main() {
 			c.Next()
 		}
 	}())
-	router.Static("/public", "./public")
+	router.Static("/public", path.Join(usr.HomeDir, "public_html"))
 
 	v1 := router.Group("/v1")
 	{
