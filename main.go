@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"os/user"
@@ -23,7 +22,7 @@ func main() {
 	}
 	writePath := path.Join(usr.HomeDir, ".de-books")
 	os.MkdirAll(writePath, os.ModePerm)
-	fmt.Println("Writing to DB at ", writePath)
+	log.Println("Writing to DB at ", writePath)
 	db, err := sql.Open("sqlite3", path.Join(writePath, "dedb.db"))
 	if err != nil {
 		log.Fatal("Error opening DB", err)
@@ -56,5 +55,6 @@ func main() {
 		v1.StaticFile("/readable", path.Join(writePath, "dbbooks.txt"))
 	}
 
+  log.Println("Starting server")
 	router.Run(":8080")
 }
