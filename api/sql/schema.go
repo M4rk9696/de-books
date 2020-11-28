@@ -20,4 +20,14 @@ CREATE TABLE IF NOT EXISTS DE_BOOKS
   desc TEXT,
   added_at INTEGER);
 
+CREATE VIEW IF NOT EXISTS V_DE_TAG_GROUPS
+  AS SELECT b.uuid uuid, group_concat(t.tag) tags
+  FROM DE_BOOK_TAGS bt
+  JOIN DE_BOOKS b ON b.uuid = bt.book_uuid
+  JOIN DE_TAGS t ON bt.tag_uuid = t.uuid group by b.uuid;
+
+CREATE VIEW IF NOT EXISIS V_DE_BOOKS
+  AS SELECT b.url, b.desc, t.tags
+  FROM DE_BOOKS b
+  JOIN V_DE_TAG_GROUPS t ON b.uuid = t.uuid;
 `
